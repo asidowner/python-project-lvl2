@@ -32,8 +32,12 @@ lint:
 
 # Test with pytest
 test:
-    poetry run pytest
-
+	poetry run pytest
 # Test coverage
-test-cov:
-    poetry run pytest --cov=gendiff --cov-report=xml --cov-report=html
+test-coverage:
+	poetry run pytest --cov=gendiff --cov-report xml
+
+selfcheck:
+	poetry check
+
+check: selfcheck test lint
