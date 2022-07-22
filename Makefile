@@ -28,4 +28,4 @@ package-remove:
 
 # Check lint by flake8, see setup.cfg
 lint:
-	poetry run flake8 differ
+	poetry run flake8 gendiff
