@@ -19,7 +19,8 @@ def generate_diff(first_file_path: str,
     return format_message(diff, format_)
 
 
-def _get_change_status(first_value: any = None, second_value: any = None) -> str:
+def _get_change_status(first_value: any = None,
+                       second_value: any = None) -> str:
     if first_value is None and second_value is not None:
         return 'added'
     elif first_value is not None and second_value is None:
