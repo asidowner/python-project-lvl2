@@ -11,14 +11,31 @@ def data():
             'file1': os.path.join('tests', 'fixtures', 'file1.json'),
             'file2': os.path.join('tests', 'fixtures', 'file2.json'),
             'wrong_path': os.path.join('tests', 'fixtures', 'wrong_path'),
-            'expected': os.path.join('tests', 'fixtures', 'stylish_result_json.txt'),
+            'expected': os.path.join('tests', 'fixtures', 'stylish_result.txt'),
+            'format': 'stylish'
+        },
+        'yaml': {
+            'file1': os.path.join('tests', 'fixtures', 'file1.yml'),
+            'file2': os.path.join('tests', 'fixtures', 'file2.yaml'),
+            'wrong_path': os.path.join('tests', 'fixtures', 'wrong_path'),
+            'expected': os.path.join('tests', 'fixtures', 'stylish_result.txt'),
             'format': 'stylish'
         }
     }
 
 
-def test_generate_diff(data):
+def test_generate_diff_json(data):
     json_data = data.get('json')
+    expected_path = json_data.get('expected')
+    file1 = json_data.get('file1')
+    file2 = json_data.get('file2')
+    format_ = json_data.get('format')
+    with open(expected_path) as f:
+        expected = f.read()
+
+
+def test_generate_diff_yaml(data):
+    json_data = data.get('yaml')
     expected_path = json_data.get('expected')
     file1 = json_data.get('file1')
     file2 = json_data.get('file2')

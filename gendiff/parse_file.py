@@ -1,9 +1,10 @@
 import json
+import yaml
 import os
 import pathlib
 from gendiff.utils.Exception import NotSupportFileSuffix
 
-_SUPPORTED_SUFFIX = ('.json',)
+_SUPPORTED_SUFFIX = ('.json', '.yml', '.yaml')
 
 
 def parse_file(file_path):
@@ -17,3 +18,6 @@ def parse_file(file_path):
 
     if file_suffix == '.json':
         return json.load(open(file_path))
+    elif file_suffix in ('.yml', '.yaml'):
+        with open(file_path) as f:
+            return yaml.full_load(f)
