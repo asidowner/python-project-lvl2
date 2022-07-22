@@ -35,3 +35,7 @@ gendiff /home/asidowner/git/python-project-lvl2/tests/resource/fixtures/file1.js
 
 ### Example of getting changes between files in JSON format
 [![asciicast](https://asciinema.org/a/w2G7XQbUA04x0DD31ztoosciD.svg)](https://asciinema.org/a/w2G7XQbUA04x0DD31ztoosciD)
+
+
+### Example of getting changes between files in YML format (or YML and JSON)
+[![asciicast](https://asciinema.org/a/IekVUBU8kYE8yF1eUZTqFuk6y.svg)](https://asciinema.org/a/IekVUBU8kYE8yF1eUZTqFuk6y)
