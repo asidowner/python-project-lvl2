@@ -1,0 +1,30 @@
+name: gendiff
+
+on:
+  push:
+    branches: [ master ]
+
+jobs:
+  ci:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v2
+      - uses: actions/setup-python@v2
+        with:
+          python-version: "3.7"
+      - name: Run image
+        uses: abatilo/actions-poetry@v2.0.0
+        with:
+          poetry-version: "1.1.12"
+      - name: Install project
+        run: make install
+      - name: Install project
+        run: make test
+      - name: coverage
+        run: make test-cov
+        uses: paambaati/codeclimate-action@v2.2.4
+        env:
+          CC_TEST_REPORTER_ID: ${{secrets.CC_TEST_REPORTER_ID}}
+        with:
+          coverageCommand: make test-cov
+          coverageLocations: ${{github.workspace}}/coverage.xml

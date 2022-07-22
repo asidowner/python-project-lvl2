@@ -1,6 +1,12 @@
 ### Hexlet tests and linter status:
 [![Actions Status](https://github.com/asidowner/python-project-lvl2/workflows/hexlet-check/badge.svg)](https://github.com/asidowner/python-project-lvl2/actions)
 
+### Maintainability badge
+[![Maintainability](https://api.codeclimate.com/v1/badges/2870a32618f322e4b392/maintainability)](https://codeclimate.com/github/asidowner/python-project-lvl2/maintainability)
+
+### Test Coverage Badge
+[![Test Coverage](https://api.codeclimate.com/v1/badges/2870a32618f322e4b392/test_coverage)](https://codeclimate.com/github/asidowner/python-project-lvl2/test_coverage)
+
 ### Installation
 
 Make sure you are running at least Python 3.7

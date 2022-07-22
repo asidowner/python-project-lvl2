@@ -29,3 +29,11 @@ package-remove:
 # Check lint by flake8, see setup.cfg
 lint:
 	poetry run flake8 gendiff
+
+# Test with pytest
+test:
+    poetry run pytest
+
+# Test coverage
+test-cov:
+    poetry run pytest --cov=gendiff --cov-report=xml --cov-report=html

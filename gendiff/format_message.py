@@ -1,3 +1,6 @@
+from gendiff.utils.Exception import NotSupportFormat
+
+
 _FORMAT_PATTERNS = {
     'stylish': {
         'main': '{{{result}\n}}',
@@ -11,6 +14,9 @@ _FORMAT_PATTERNS = {
 
 
 def format_message(diff: list, format_: str) -> str:
+    if format_ not in _FORMAT_PATTERNS.keys():
+        raise NotSupportFormat('Unknown format, try gendiff -h')
+
     pattern = _FORMAT_PATTERNS.get(format_)
     main_pattern: str = pattern.get('main')
 
