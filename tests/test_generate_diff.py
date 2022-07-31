@@ -1,27 +1,6 @@
-import os
 import pytest
 from gendiff.generate_diff import generate_diff
 from gendiff.utils.Exception import NotSupportFormat, NotSupportFileSuffix
-
-
-@pytest.fixture
-def data():
-    return {
-        'json': {
-            'file1': os.path.join('tests', 'fixtures', 'file1.json'),
-            'file2': os.path.join('tests', 'fixtures', 'file2.json'),
-            'wrong_path': os.path.join('tests', 'fixtures', 'wrong_path'),
-            'expected': os.path.join('tests', 'fixtures', 'stylish_result.txt'),
-            'format': 'stylish'
-        },
-        'yaml': {
-            'file1': os.path.join('tests', 'fixtures', 'file1.yml'),
-            'file2': os.path.join('tests', 'fixtures', 'file2.yaml'),
-            'wrong_path': os.path.join('tests', 'fixtures', 'wrong_path'),
-            'expected': os.path.join('tests', 'fixtures', 'stylish_result.txt'),
-            'format': 'stylish'
-        }
-    }
 
 
 def test_generate_diff_json(data):
@@ -33,13 +12,39 @@ def test_generate_diff_json(data):
     with open(expected_path) as f:
         expected = f.read()
 
+    assert expected == generate_diff(file1, file2, format_)
+
+
+def test_generate_diff_json_rec(data):
+    json_data = data.get('json')
+    expected_path = json_data.get('expected_rec')
+    file1 = json_data.get('file1_rec')
+    file2 = json_data.get('file2_rec')
+    format_ = json_data.get('format')
+    with open(expected_path) as f:
+        expected = f.read()
+
+    assert expected == generate_diff(file1, file2, format_)
+
 
 def test_generate_diff_yaml(data):
-    json_data = data.get('yaml')
-    expected_path = json_data.get('expected')
-    file1 = json_data.get('file1')
-    file2 = json_data.get('file2')
-    format_ = json_data.get('format')
+    yaml_data = data.get('yaml')
+    expected_path = yaml_data.get('expected')
+    file1 = yaml_data.get('file1')
+    file2 = yaml_data.get('file2')
+    format_ = yaml_data.get('format')
+    with open(expected_path) as f:
+        expected = f.read()
+
+    assert expected == generate_diff(file1, file2, format_)
+
+
+def test_generate_diff_yaml_rec(data):
+    yaml_data = data.get('yaml')
+    expected_path = yaml_data.get('expected_rec')
+    file1 = yaml_data.get('file1_rec')
+    file2 = yaml_data.get('file2_rec')
+    format_ = yaml_data.get('format')
     with open(expected_path) as f:
         expected = f.read()
 
