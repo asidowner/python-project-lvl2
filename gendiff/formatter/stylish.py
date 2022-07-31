@@ -4,49 +4,9 @@ _STYLISH_OBJECT_PATTERN: str = '{{{body}\n{replacer}}}'
 
 def formatter(diff_list: list, level: int = 1, replacer='  ') -> str:
     formatted_lines: list = []
+
     for diff_line in diff_list:
-        key = diff_line.get('key')
-        children = diff_line.get('children')
-
-        if children:
-            formatted_lines.append(
-                {
-                    'replacer': replacer * level,
-                    'key': key,
-                    'value': formatter(children, level + 2, replacer)
-                }
-            )
-        else:
-            change_status = diff_line.get('change_status')
-            old_value = diff_line.get('old_value')
-            new_value = diff_line.get('new_value')
-
-            if change_status in ('removed', 'changed'):
-                formatted_lines.append(
-                    {
-                        'replacer': replacer * level,
-                        'change': '-',
-                        'key': key,
-                        'value': _format_value(old_value, level + 1, replacer)
-                    }
-                )
-            if change_status in ('added', 'changed'):
-                formatted_lines.append(
-                    {
-                        'replacer': replacer * level,
-                        'change': '+',
-                        'key': key,
-                        'value': _format_value(new_value, level + 1, replacer)
-                    }
-                )
-            if change_status == 'unchanged':
-                formatted_lines.append(
-                    {
-                        'replacer': replacer * level,
-                        'key': key,
-                        'value': _format_value(new_value, level + 1, replacer)
-                    }
-                )
+        formatted_lines.extend(_format_line(diff_line, level, replacer))
 
     body: str = ''.join(list(
         map(
@@ -63,6 +23,54 @@ def formatter(diff_list: list, level: int = 1, replacer='  ') -> str:
     result_replacer = '' if level == 1 else replacer * (level - 1)
     result: str = _STYLISH_OBJECT_PATTERN.format(body=body,
                                                  replacer=result_replacer)
+    return result
+
+
+def _format_line(line, level: int, replacer: str) -> list:
+    result = []
+    key = line.get('key')
+    children = line.get('children')
+
+    if children:
+        result.append(
+            {
+                'replacer': replacer * level,
+                'key': key,
+                'value': formatter(children, level + 2, replacer)
+            }
+        )
+    else:
+        change_status = line.get('change_status')
+        old_value = line.get('old_value')
+        new_value = line.get('new_value')
+
+        if change_status in ('removed', 'changed'):
+            result.append(
+                {
+                    'replacer': replacer * level,
+                    'change': '-',
+                    'key': key,
+                    'value': _format_value(old_value, level + 1, replacer)
+                }
+            )
+        if change_status in ('added', 'changed'):
+            result.append(
+                {
+                    'replacer': replacer * level,
+                    'change': '+',
+                    'key': key,
+                    'value': _format_value(new_value, level + 1, replacer)
+                }
+            )
+        if change_status == 'unchanged':
+            result.append(
+                {
+                    'replacer': replacer * level,
+                    'key': key,
+                    'value': _format_value(new_value, level + 1, replacer)
+                }
+            )
+
     return result
 
 

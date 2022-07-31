@@ -12,15 +12,8 @@ def diff(first_data: any, second_data: any) -> dict or list:
 
 
 def _get_diff_by_key(key: str, first_data: dict, second_data: dict):
-    def get_formatted_value(key_: str, data: dict):
-        if key_ in data:
-            value = data.get(key_)
-            return 'null' if value is None else value
-        else:
-            return None
-
-    old_value = get_formatted_value(key, first_data)
-    new_value = get_formatted_value(key, second_data)
+    old_value = _get_formatted_value(key, first_data)
+    new_value = _get_formatted_value(key, second_data)
     change_status = _get_change_status(old_value, new_value)
 
     if isinstance(old_value, dict) and isinstance(new_value, dict):
@@ -35,6 +28,14 @@ def _get_diff_by_key(key: str, first_data: dict, second_data: dict):
             'old_value': old_value,
             'new_value': new_value
         }
+
+
+def _get_formatted_value(key_: str, data: dict):
+    if key_ in data:
+        value = data.get(key_)
+        return 'null' if value is None else value
+    else:
+        return None
 
 
 def _get_change_status(old_value: any = None,
