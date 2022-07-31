@@ -45,3 +45,6 @@ gendiff /home/asidowner/git/python-project-lvl2/tests/resource/fixtures/file1.js
 
 ### Example of diff as plain text
 [![asciicast](https://asciinema.org/a/DLvdxO2jxFknXi02Fc4O25GZS.svg)](https://asciinema.org/a/DLvdxO2jxFknXi02Fc4O25GZS)
+
+### Example of diff as json result
+[![asciicast](https://asciinema.org/a/U87rL7cHlpER7seyAVnlche2S.svg)](https://asciinema.org/a/U87rL7cHlpER7seyAVnlche2S)

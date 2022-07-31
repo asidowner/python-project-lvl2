@@ -24,6 +24,7 @@ def data():
             'expected': os.path.join('tests', 'fixtures', 'stylish_result.txt'),
             'expected_rec': os.path.join('tests', 'fixtures', 'stylish_result_rec.txt'),
             'expected_rec_plain': os.path.join('tests', 'fixtures', 'plain_result_rec.txt'),
+            'expected_rec_json': os.path.join('tests', 'fixtures', 'json_result_rec.txt'),
             'format': 'stylish'
         }
     }

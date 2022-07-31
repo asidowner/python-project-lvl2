@@ -51,6 +51,18 @@ def test_generate_diff_yaml_rec(data):
     assert expected == generate_diff(file1, file2, format_)
 
 
+def test_generate_diff_as_json(data):
+    yaml_data = data.get('yaml')
+    expected_path = yaml_data.get('expected_rec_json')
+    file1 = yaml_data.get('file1_rec')
+    file2 = yaml_data.get('file2_rec')
+    format_ = 'json'
+    with open(expected_path) as f:
+        expected = f.read()
+
+    assert expected == generate_diff(file1, file2, format_)
+
+
 def test_unknown_format(data):
     json_data = data.get('json')
     file1 = json_data.get('file1')
