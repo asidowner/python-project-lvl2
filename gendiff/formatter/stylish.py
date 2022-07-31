@@ -44,33 +44,39 @@ def _format_line(line, level: int, replacer: str) -> list:
         old_value = line.get('old_value')
         new_value = line.get('new_value')
 
-        if change_status in ('removed', 'changed'):
-            result.append(
-                {
-                    'replacer': replacer * level,
-                    'change': '-',
-                    'key': key,
-                    'value': _format_value(old_value, level + 1, replacer)
-                }
-            )
-        if change_status in ('added', 'changed'):
-            result.append(
-                {
-                    'replacer': replacer * level,
-                    'change': '+',
-                    'key': key,
-                    'value': _format_value(new_value, level + 1, replacer)
-                }
-            )
-        if change_status == 'unchanged':
-            result.append(
-                {
-                    'replacer': replacer * level,
-                    'key': key,
-                    'value': _format_value(new_value, level + 1, replacer)
-                }
-            )
+        result.extend(_get_data_to_line(key,
+                                        change_status,
+                                        level,
+                                        replacer,
+                                        old_value,
+                                        new_value))
 
+    return result
+
+
+def _get_data_to_line(key: str, change_status: str, level: int, replacer: str,
+                      old_value=None, new_value=None) -> list:
+    result = []
+    if change_status in ('removed', 'changed'):
+        result.append({
+            'replacer': replacer * level,
+            'change': '-',
+            'key': key,
+            'value': _format_value(old_value, level + 1, replacer)
+        })
+    if change_status in ('added', 'changed'):
+        result.append({
+            'replacer': replacer * level,
+            'change': '+',
+            'key': key,
+            'value': _format_value(new_value, level + 1, replacer)
+        })
+    if change_status == 'unchanged':
+        result.append({
+            'replacer': replacer * level,
+            'key': key,
+            'value': _format_value(new_value, level + 1, replacer)
+        })
     return result
 
 
