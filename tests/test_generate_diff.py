@@ -91,5 +91,5 @@ def test_bad_suffix(data):
     file2 = json_data.get('file2')
     format_ = json_data.get('format')
 
-    with pytest.raises(NotSupportFileSuffix) as errmsg:
+    with pytest.raises(NotSupportFileSuffix):
         generate_diff(file1, file2, format_)
