@@ -59,7 +59,6 @@ def test_generate_diff_as_json(data):
     format_ = 'json'
     with open(expected_path) as f:
         expected = f.read()
-
     assert expected == generate_diff(file1, file2, format_)
 
 

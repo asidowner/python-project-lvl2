@@ -42,9 +42,9 @@ def _format_line(line, parent_key=None) -> list:
 def _format_value(value):
     if isinstance(value, dict):
         return '[complex value]'
-    elif value == 'null':
-        return value
     elif isinstance(value, bool):
         return 'true' if value else 'false'
-    else:
+    elif isinstance(value, str) and value != 'null':
         return f"'{value}'"
+    else:
+        return value
