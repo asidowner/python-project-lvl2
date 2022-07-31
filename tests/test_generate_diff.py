@@ -41,10 +41,10 @@ def test_generate_diff_yaml(data):
 
 def test_generate_diff_yaml_rec(data):
     yaml_data = data.get('yaml')
-    expected_path = yaml_data.get('expected_rec')
+    expected_path = yaml_data.get('expected_rec_plain')
     file1 = yaml_data.get('file1_rec')
     file2 = yaml_data.get('file2_rec')
-    format_ = yaml_data.get('format')
+    format_ = 'plain'
     with open(expected_path) as f:
         expected = f.read()
 

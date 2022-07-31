@@ -12,8 +12,8 @@
 Make sure you are running at least Python 3.7
 
 ```commandline
-git clone https://github.com/asidowner/python-project-lvl1
-cd python-project-lvl1 && make install && make build && make package-install
+git clone https://github.com/asidowner/python-project-lvl2
+cd python-project-lvl2 && make install && make build && make package-install
 ```
 
 ### Help
@@ -42,3 +42,6 @@ gendiff /home/asidowner/git/python-project-lvl2/tests/resource/fixtures/file1.js
 
 ### Example of diff complex structure
 [![asciicast](https://asciinema.org/a/u6P88ZgakqGcTOontdBEvSRXY.svg)](https://asciinema.org/a/u6P88ZgakqGcTOontdBEvSRXY)
+
+### Example of diff as plain text
+[![asciicast](https://asciinema.org/a/DLvdxO2jxFknXi02Fc4O25GZS.svg)](https://asciinema.org/a/DLvdxO2jxFknXi02Fc4O25GZS)

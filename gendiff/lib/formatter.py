@@ -1,8 +1,10 @@
 from gendiff.utils.Exception import NotSupportFormat
 import gendiff.formatter.stylish as stylish
+import gendiff.formatter.plain as plain
 
 _FORMATTERS = {
-    'stylish': stylish.formatter
+    'stylish': stylish.formatter,
+    'plain': plain.formatter
 }
 
 
