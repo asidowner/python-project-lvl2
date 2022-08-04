@@ -1,95 +1,43 @@
 import pytest
 from gendiff.generate_diff import generate_diff
-from gendiff.utils.Exception import NotSupportFormat, NotSupportFileSuffix
+from gendiff.utils.exception import NotSupportedFormatError, NotSupportedFileSuffixError
 
 
-def test_generate_diff_json(data):
-    json_data = data.get('json')
-    expected_path = json_data.get('expected')
-    file1 = json_data.get('file1')
-    file2 = json_data.get('file2')
-    format_ = json_data.get('format')
-    with open(expected_path) as f:
-        expected = f.read()
-
-    assert expected == generate_diff(file1, file2, format_)
+def test_generate_diff_json(first_file_json, second_file_json, stylish_expected):
+    assert stylish_expected == generate_diff(first_file_json, second_file_json, 'stylish')
 
 
-def test_generate_diff_json_rec(data):
-    json_data = data.get('json')
-    expected_path = json_data.get('expected_rec')
-    file1 = json_data.get('file1_rec')
-    file2 = json_data.get('file2_rec')
-    format_ = json_data.get('format')
-    with open(expected_path) as f:
-        expected = f.read()
-
-    assert expected == generate_diff(file1, file2, format_)
+def test_generate_diff_json_rec(first_file_rec_json, second_file_rec_json, stylish_rec_expected):
+    assert stylish_rec_expected == generate_diff(first_file_rec_json, second_file_rec_json, 'stylish')
 
 
-def test_generate_diff_yaml(data):
-    yaml_data = data.get('yaml')
-    expected_path = yaml_data.get('expected')
-    file1 = yaml_data.get('file1')
-    file2 = yaml_data.get('file2')
-    format_ = yaml_data.get('format')
-    with open(expected_path) as f:
-        expected = f.read()
-
-    assert expected == generate_diff(file1, file2, format_)
+def test_generate_diff_yaml(first_file_yaml, second_file_yaml, stylish_expected):
+    assert stylish_expected == generate_diff(first_file_yaml, second_file_yaml, 'stylish')
 
 
-def test_generate_diff_yaml_rec(data):
-    yaml_data = data.get('yaml')
-    expected_path = yaml_data.get('expected_rec_plain')
-    file1 = yaml_data.get('file1_rec')
-    file2 = yaml_data.get('file2_rec')
-    format_ = 'plain'
-    with open(expected_path) as f:
-        expected = f.read()
-
-    assert expected == generate_diff(file1, file2, format_)
+def test_generate_diff_yaml_rec(first_file_rec_yaml, second_file_rec_yaml, plain_rec_expected):
+    assert plain_rec_expected == generate_diff(first_file_rec_yaml, second_file_rec_yaml, 'plain')
 
 
-def test_generate_diff_as_json(data):
-    yaml_data = data.get('yaml')
-    expected_path = yaml_data.get('expected_rec_json')
-    file1 = yaml_data.get('file1_rec')
-    file2 = yaml_data.get('file2_rec')
-    format_ = 'json'
-    with open(expected_path) as f:
-        expected = f.read()
-    assert expected == generate_diff(file1, file2, format_)
+def test_generate_diff_as_json(first_file_rec_yaml, second_file_rec_json, json_rec_expected):
+    assert json_rec_expected == generate_diff(first_file_rec_yaml, second_file_rec_json, 'json')
 
 
-def test_unknown_format(data):
-    json_data = data.get('json')
-    file1 = json_data.get('file1')
-    file2 = json_data.get('file2')
-
-    with pytest.raises(NotSupportFormat) as errmsg:
-        generate_diff(file1, file2, 'asdsdg')
+def test_unknown_format(first_file_json, second_file_yaml):
+    with pytest.raises(NotSupportedFormatError) as errmsg:
+        generate_diff(first_file_json, second_file_yaml, 'asdsdg')
 
         assert 'Unknown format, try gendiff -h' == str(errmsg.value)
 
 
-def test_bad_path(data):
-    json_data = data.get('json')
-    file1 = json_data.get('wrong_path')
-    file2 = json_data.get('file2')
-    format_ = json_data.get('format')
-
+def test_bad_path(second_file_yaml):
+    wrong_path = 'asd/asdvzxcv/asf'
     with pytest.raises(FileNotFoundError) as errmsg:
-        generate_diff(file1, file2, format_)
+        generate_diff('asd/asdvzxcv/asf', second_file_yaml, 'stylish')
 
-        assert f'Check your file path: {file1}' == str(errmsg.value)
+        assert f'Check your file path: {wrong_path}' == str(errmsg.value)
 
 
-def test_bad_suffix(data):
-    json_data = data.get('json')
-    file1 = json_data.get('expected')
-    file2 = json_data.get('file2')
-    format_ = json_data.get('format')
-
-    with pytest.raises(NotSupportFileSuffix):
-        generate_diff(file1, file2, format_)
+def test_bad_suffix(wrong_suffix, second_file_yaml):
+    with pytest.raises(NotSupportedFileSuffixError):
+        generate_diff(wrong_suffix, second_file_yaml, 'stylish')

@@ -1,13 +1,17 @@
 from gendiff.lib.formatter import format_result
 from gendiff.lib.parser import parse_file
 from gendiff.lib.diff import diff
+from gendiff.lib.file_reader import file_reader
 
 
 def generate_diff(first_file_path: str,
                   second_file_path: str,
                   format_: str = 'stylish') -> str:
-    first_file_data: dict = parse_file(first_file_path)
-    second_file_data: dict = parse_file(second_file_path)
+    first_file, first_file_suffix = file_reader(first_file_path)
+    second_file, second_file_suffix = file_reader(second_file_path)
+
+    first_file_data = parse_file(first_file, first_file_suffix)
+    second_file_data = parse_file(second_file, second_file_suffix)
 
     result = diff(first_file_data, second_file_data)
 
