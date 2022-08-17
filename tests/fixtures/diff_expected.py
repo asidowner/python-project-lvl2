@@ -22,10 +22,10 @@ diff_expected = [{'children': [{'change_status': 'added',
                                 'old_value': None,
                                 'key': 'setting5',
                                 'new_value': {'key5': 'value5'}},
-                               {'children': [{'children': [{'change_status': 'changed',
+                               {'children': [{'children': [{'change_status': 'changed',  # noqa: E501
                                                             'old_value': '',
                                                             'key': 'wow',
-                                                            'new_value': 'so much'}],
+                                                            'new_value': 'so much'}],  # noqa: E501
                                               'key': 'doge'},
                                              {'change_status': 'unchanged',
                                               'old_value': 'value',
