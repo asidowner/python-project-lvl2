@@ -2,7 +2,7 @@ _STYLISH_KEY_VALUE_PATTERN: str = '\n{replacer}{change} {key}: {value}'
 _STYLISH_OBJECT_PATTERN: str = '{{{body}\n{replacer}}}'
 
 
-def formatter(diff_list: list, level: int = 1, replacer='  ') -> str:
+def get_formatted_data(diff_list: list, level: int = 1, replacer='  ') -> str:
     formatted_lines: list = []
 
     for diff_line in diff_list:
@@ -36,7 +36,7 @@ def _format_line(line, level: int, replacer: str) -> list:
             {
                 'replacer': replacer * level,
                 'key': key,
-                'value': formatter(children, level + 2, replacer)
+                'value': get_formatted_data(children, level + 2, replacer)
             }
         )
     else:

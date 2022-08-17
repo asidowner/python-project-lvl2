@@ -5,7 +5,7 @@ _PLAIN_PATTERNS: dict = {
 }
 
 
-def formatter(diff_list: list) -> str:
+def get_formatted_data(diff_list: list) -> str:
     result = []
     for diff_item in diff_list:
         result.extend(_format_line(diff_item))

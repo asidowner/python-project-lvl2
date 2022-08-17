@@ -4,9 +4,9 @@ import gendiff.formatter.plain_formatter as plain_formatter
 import gendiff.formatter.json_formatter as json_formatter
 
 _FORMATTERS = {
-    'stylish': stylish_formatter.formatter,
-    'plain': plain_formatter.formatter,
-    'json': json_formatter.formatter
+    'stylish': stylish_formatter.get_formatted_data,
+    'plain': plain_formatter.get_formatted_data,
+    'json': json_formatter.get_formatted_data
 }
 
 
