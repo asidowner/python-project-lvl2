@@ -19,7 +19,7 @@ def _get_diff_by_key(key: str, first_data: dict, second_data: dict):
     if isinstance(old_value, dict) and isinstance(new_value, dict):
         return {
             'key': key,
-            'children': diff(first_data=old_value, second_data=new_value)
+            'children': diff(old_value, new_value)
         }
     else:
         return {

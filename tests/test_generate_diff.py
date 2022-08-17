@@ -1,43 +1,80 @@
 import pytest
 from gendiff.generate_diff import generate_diff
 from gendiff.utils.exception import NotSupportedFormatError, NotSupportedFileSuffixError
+from tests.conftest import get_path_to_test_data
 
 
-def test_generate_diff_json(first_file_json, second_file_json, stylish_expected):
-    assert stylish_expected == generate_diff(first_file_json, second_file_json, 'stylish')
+@pytest.mark.parametrize('first_file_path,second_file_path,expected,format_',
+                         [
+                             (
+                                     get_path_to_test_data('file1.json'),
+                                     get_path_to_test_data('file2.json'),
+                                     get_path_to_test_data('stylish_result.txt'),
+                                     'stylish'
+                             ),
+                             (
+                                     get_path_to_test_data('file1_nested.json'),
+                                     get_path_to_test_data('file2_nested.json'),
+                                     get_path_to_test_data('plain_result_nested.txt'),
+                                     'plain'
+                             ),
+                             (
+                                     get_path_to_test_data('file1.yml'),
+                                     get_path_to_test_data('file2.yaml'),
+                                     get_path_to_test_data('stylish_result.txt'),
+                                     'stylish'
+                             ),
+                             (
+                                     get_path_to_test_data('file1_nested.yml'),
+                                     get_path_to_test_data('file2_nested.yml'),
+                                     get_path_to_test_data('json_result_nested.txt'),
+                                     'json'
+                             ),
+                             (
+                                     get_path_to_test_data('file1.json'),
+                                     get_path_to_test_data('file2.yaml'),
+                                     get_path_to_test_data('stylish_result.txt'),
+                                     'stylish'
+                             ),
+                             (
+                                     get_path_to_test_data('file1_nested.json'),
+                                     get_path_to_test_data('file2_nested.yml'),
+                                     get_path_to_test_data('stylish_result_nested.txt'),
+                                     'stylish'
+                             ),
+                             (
+                                     get_path_to_test_data('file1_nested.json'),
+                                     get_path_to_test_data('file2_nested.yml'),
+                                     get_path_to_test_data('stylish_result_nested.txt'),
+                                     'stylish'
+                             )
+                         ]
+                         )
+def test_generate_diff(first_file_path, second_file_path, expected, format_):
+    with open(expected) as f:
+        assert generate_diff(first_file_path, second_file_path, format_) == f.read()
 
 
-def test_generate_diff_json_rec(first_file_rec_json, second_file_rec_json, stylish_rec_expected):
-    assert stylish_rec_expected == generate_diff(first_file_rec_json, second_file_rec_json, 'stylish')
-
-
-def test_generate_diff_yaml(first_file_yaml, second_file_yaml, stylish_expected):
-    assert stylish_expected == generate_diff(first_file_yaml, second_file_yaml, 'stylish')
-
-
-def test_generate_diff_yaml_rec(first_file_rec_yaml, second_file_rec_yaml, plain_rec_expected):
-    assert plain_rec_expected == generate_diff(first_file_rec_yaml, second_file_rec_yaml, 'plain')
-
-
-def test_generate_diff_as_json(first_file_rec_yaml, second_file_rec_json, json_rec_expected):
-    assert json_rec_expected == generate_diff(first_file_rec_yaml, second_file_rec_json, 'json')
-
-
-def test_unknown_format(first_file_json, second_file_yaml):
+def test_unknown_format():
     with pytest.raises(NotSupportedFormatError) as errmsg:
-        generate_diff(first_file_json, second_file_yaml, 'asdsdg')
+        generate_diff(get_path_to_test_data('file1.yml'),
+                      get_path_to_test_data('file2.yaml'),
+                      'asdsdg')
 
         assert 'Unknown format, try gendiff -h' == str(errmsg.value)
 
 
-def test_bad_path(second_file_yaml):
+def test_bad_path():
     wrong_path = 'asd/asdvzxcv/asf'
     with pytest.raises(FileNotFoundError) as errmsg:
-        generate_diff('asd/asdvzxcv/asf', second_file_yaml, 'stylish')
-
+        generate_diff('asd/asdvzxcv/asf',
+                      get_path_to_test_data('file2.yaml'),
+                      'stylish')
         assert f'Check your file path: {wrong_path}' == str(errmsg.value)
 
 
-def test_bad_suffix(wrong_suffix, second_file_yaml):
+def test_bad_suffix():
     with pytest.raises(NotSupportedFileSuffixError):
-        generate_diff(wrong_suffix, second_file_yaml, 'stylish')
+        generate_diff(get_path_to_test_data('file1_nested.txt'),
+                      get_path_to_test_data('file2.yaml'),
+                      'stylish')

@@ -2,7 +2,7 @@ import pathlib
 import os
 
 
-def file_reader(file_path: str) -> tuple:
+def get_data_from_file(file_path: str) -> tuple:
     if not os.path.isfile(file_path):
         raise FileNotFoundError(f'Check your file path: {file_path}')
 
