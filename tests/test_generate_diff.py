@@ -6,54 +6,61 @@ from tests.conftest import get_path_to_test_data
 
 
 @pytest.mark.parametrize(
-    'first_file_path,second_file_path,expected,format_',
+    'first_file_name,second_file_name,expected_file_name,format_',
     [
         (
-            get_path_to_test_data('file1.json'),
-            get_path_to_test_data('file2.json'),
-            get_path_to_test_data('stylish_result.txt'),
+            'file1.json',
+            'file2.json',
+            'stylish_result.txt',
             'stylish'
         ),
         (
-            get_path_to_test_data('file1_nested.json'),
-            get_path_to_test_data('file2_nested.json'),
-            get_path_to_test_data('plain_result_nested.txt'),
+            'file1_nested.json',
+            'file2_nested.json',
+            'plain_result_nested.txt',
             'plain'
         ),
         (
-            get_path_to_test_data('file1.yml'),
-            get_path_to_test_data('file2.yaml'),
-            get_path_to_test_data('stylish_result.txt'),
+            'file1.yml',
+            'file2.yaml',
+            'stylish_result.txt',
             'stylish'
         ),
         (
-            get_path_to_test_data('file1_nested.yml'),
-            get_path_to_test_data('file2_nested.yml'),
-            get_path_to_test_data('json_result_nested.txt'),
+            'file1_nested.yml',
+            'file2_nested.yml',
+            'json_result_nested.txt',
             'json'
         ),
         (
-            get_path_to_test_data('file1.json'),
-            get_path_to_test_data('file2.yaml'),
-            get_path_to_test_data('stylish_result.txt'),
+            'file1.json',
+            'file2.yaml',
+            'stylish_result.txt',
             'stylish'
         ),
         (
-            get_path_to_test_data('file1_nested.json'),
-            get_path_to_test_data('file2_nested.yml'),
-            get_path_to_test_data('stylish_result_nested.txt'),
+            'file1_nested.json',
+            'file2_nested.yml',
+            'stylish_result_nested.txt',
             'stylish'
         ),
         (
-            get_path_to_test_data('file1_nested.json'),
-            get_path_to_test_data('file2_nested.yml'),
-            get_path_to_test_data('stylish_result_nested.txt'),
+            'file1_nested.json',
+            'file2_nested.yml',
+            'stylish_result_nested.txt',
             'stylish'
         )
     ]
 )
-def test_generate_diff(first_file_path, second_file_path, expected, format_):
-    with open(expected) as f:
+def test_generate_diff(first_file_name,
+                       second_file_name,
+                       expected_file_name,
+                       format_):
+    expected_path = get_path_to_test_data(expected_file_name)
+    first_file_path = get_path_to_test_data(first_file_name)
+    second_file_path = get_path_to_test_data(second_file_name)
+
+    with open(expected_path) as f:
         assert generate_diff(first_file_path,
                              second_file_path,
                              format_) == f.read()
